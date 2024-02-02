@@ -31,11 +31,11 @@ userRouter.post("/register", async (req, res) => {
 
 userRouter.post("/login", async (req, res) => {
     const { email, password } = req.body
-    
+
     let options = {
         expiresIn: "1h"
     }
-  
+
 
     try {
         let data = await UserModel.find({ email })
@@ -53,6 +53,14 @@ userRouter.post("/login", async (req, res) => {
                     })
                 }
             });
+            return {
+                statusCode: 200,
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`,
+                },
+
+            }
         }
         else {
             res.send({
